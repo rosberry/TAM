@@ -1,1 +1,1 @@
-include ':tam'
+include ':tam', ':sample'
