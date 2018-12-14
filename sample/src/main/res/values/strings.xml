@@ -1,0 +1,13 @@
+<!--
+  ~ /*
+  ~  * Copyright (c) 2018 Rosberry. All rights reserved.
+  ~  */
+  -->
+
+<resources>
+    <string name="app_name">sample</string>
+    <string name="log_event">Log Event</string>
+    <string name="log_error">Log Error</string>
+    <string name="log_warning">Log Warning</string>
+    <string name="log_http">Log Http</string>
+</resources>
