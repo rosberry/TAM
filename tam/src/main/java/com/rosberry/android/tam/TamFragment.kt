@@ -13,6 +13,7 @@ import android.support.v4.app.DialogFragment
 import android.support.v7.widget.RecyclerView
 import android.text.Spannable
 import android.text.SpannableString
+import android.text.TextUtils
 import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
@@ -106,6 +107,9 @@ class EventViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val boldSpan = StyleSpan(Typeface.BOLD)
         spannableString.setSpan(boldSpan, 0, time.length + item.tag.length + 3, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
 
+        val maxLines = if (item.isExpanded) 0 else 3
+        itemView.eventText.maxLines = maxLines
+        itemView.eventText.ellipsize = TextUtils.TruncateAt.END
         itemView.eventText.text = spannableString
     }
 
