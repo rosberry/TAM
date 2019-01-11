@@ -9,6 +9,8 @@ package com.rosberry.android.tam
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.support.v4.app.DialogFragment
 import android.support.v7.widget.RecyclerView
 import android.text.Spannable
@@ -33,6 +35,8 @@ class TamFragment : DialogFragment(), Tam.EventObserver {
     }
 
     private lateinit var adapter: EventsAdapter
+
+    private val handler: Handler = Handler(Looper.getMainLooper())
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.f_tam, container, false)
@@ -64,7 +68,7 @@ class TamFragment : DialogFragment(), Tam.EventObserver {
     }
 
     override fun newEvent(event: Tam.LogEvent) {
-        adapter.putEvent(event)
+        handler.post { adapter.putEvent(event) }
     }
 }
 
