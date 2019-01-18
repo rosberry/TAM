@@ -15,8 +15,6 @@ import java.util.Calendar
  */
 class Tam private constructor() {
 
-    private val events: MutableList<LogEvent> = mutableListOf()
-
     companion object {
 
         private var instance: Tam? = null
@@ -57,8 +55,8 @@ class Tam private constructor() {
 
         fun http(method: String, params: Map<String, String?>) {
             val message: String = params.asSequence()
-                    .joinToString(postfix = ";\n", separator = "\n",
-                            transform = { entry -> "${entry.key}: ${entry.value}" })
+                .joinToString(postfix = ";\n", separator = "\n",
+                        transform = { entry -> "${entry.key}: ${entry.value}" })
 
             instance?.putEvent(LogEvent(LogType.HTTP, method, message))
         }
@@ -67,6 +65,8 @@ class Tam private constructor() {
             instance?.putEvent(LogEvent(LogType.WARNING))
         }
     }
+
+    private val events: MutableList<LogEvent> = mutableListOf()
 
     fun observeEvents(observer: EventObserver) {
         observers.add(observer)
@@ -94,7 +94,8 @@ class Tam private constructor() {
     data class LogEvent(
             val type: LogType,
             val tag: String = "",
-            val message: String = ""
+            val message: String = "",
+            var isExpanded: Boolean = false
     ) {
 
         val time: Calendar = Calendar.getInstance()

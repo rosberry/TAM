@@ -10,9 +10,11 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
+import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.RecyclerView
 import android.text.Spannable
 import android.text.SpannableString
+import android.text.TextUtils
 import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
@@ -42,6 +44,7 @@ class TamFragment : DialogFragment(), Tam.EventObserver {
         super.onViewCreated(view, savedInstanceState)
         Tam.instance()
             .observeEvents(this)
+        eventsList.itemAnimator = DefaultItemAnimator()
     }
 
     override fun onResume() {
@@ -70,12 +73,12 @@ class TamFragment : DialogFragment(), Tam.EventObserver {
 
 class EventsAdapter(
         private val items: MutableList<Tam.LogEvent>
-) : RecyclerView.Adapter<EventViewHolder>() {
+) : RecyclerView.Adapter<EventViewHolder>(), ItemClickListener {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.i_log_event, parent, false)
-        return EventViewHolder(view)
+        return EventViewHolder(view, this)
     }
 
     override fun getItemCount(): Int = items.size
@@ -84,13 +87,20 @@ class EventsAdapter(
         holder.bind(items[position])
     }
 
+    override fun click(position: Int) {
+        notifyItemChanged(position)
+    }
+
     fun putEvent(item: Tam.LogEvent) {
         items.add(item)
         notifyItemInserted(items.lastIndex)
     }
 }
 
-class EventViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class EventViewHolder(
+        view: View,
+        private val clickListener: ItemClickListener
+) : RecyclerView.ViewHolder(view) {
 
     private val timeFormat = SimpleDateFormat("HH:mm:SS", Locale.getDefault())
 
@@ -106,7 +116,15 @@ class EventViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val boldSpan = StyleSpan(Typeface.BOLD)
         spannableString.setSpan(boldSpan, 0, time.length + item.tag.length + 3, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
 
+        val maxLines = if (item.isExpanded) Integer.MAX_VALUE else 3
+        itemView.eventText.maxLines = maxLines
+        itemView.eventText.ellipsize = TextUtils.TruncateAt.END
         itemView.eventText.text = spannableString
+
+        itemView.setOnClickListener {
+            item.isExpanded = !item.isExpanded
+            clickListener.click(adapterPosition)
+        }
     }
 
     private fun getColorByType(type: Tam.LogType): Int {
@@ -117,4 +135,9 @@ class EventViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             Tam.LogType.HTTP -> Color.parseColor("#00E5FF")
         }
     }
+}
+
+interface ItemClickListener {
+
+    fun click(position: Int)
 }
