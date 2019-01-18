@@ -12,7 +12,14 @@ import android.view.Menu
 import android.view.MenuItem
 import com.rosberry.android.tam.Tam
 import com.rosberry.android.tam.TamFragment
+import com.rosberry.android.tam.TamLoggingInterceptor
 import kotlinx.android.synthetic.main.activity_main.*
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
+import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,6 +28,22 @@ class MainActivity : AppCompatActivity() {
         private const val ERROR_TAG = "error_tag"
 
         private const val ITEM_ID = 0
+    }
+
+    private val httpClient: OkHttpClient = OkHttpClient.Builder()
+        .addInterceptor(TamLoggingInterceptor()) // For logging in TAM console
+        .build()
+
+    private val request: Request = Request.Builder()
+        .url("http://www.publicobject.com/helloworld.txt")
+        .header("User-Agent", "Android")
+        .header("Header-Example", "TAM LOGGING INTERCEPTOR")
+        .build()
+
+    private val requestCallback: Callback = object : Callback {
+        override fun onFailure(call: Call, e: IOException) {}
+
+        override fun onResponse(call: Call, response: Response) {}
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +70,11 @@ class MainActivity : AppCompatActivity() {
                     "body: " to "body value"
             )
             Tam.http("POST", params)
+        }
+
+        logHttpInterceptorButton.setOnClickListener {
+            httpClient.newCall(request)
+                .enqueue(requestCallback)
         }
     }
 

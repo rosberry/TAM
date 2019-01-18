@@ -43,9 +43,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/log_http"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/logHttpInterceptorButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/logWarningButton" />
+
+    <Button android:id="@+id/logHttpInterceptorButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/log_http_interceptor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logHttpButton" />
 
 </android.support.constraint.ConstraintLayout>
