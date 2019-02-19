@@ -6,6 +6,7 @@
 
 package com.rosberry.android.tam
 
+import android.content.ClipData
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
@@ -22,6 +23,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.content.ClipboardManager
+import android.content.Context
+import android.widget.Toast
 import kotlinx.android.synthetic.main.f_tam.*
 import kotlinx.android.synthetic.main.i_log_event.view.*
 import java.text.SimpleDateFormat
@@ -108,6 +112,10 @@ class EventViewHolder(
 
     private val timeFormat = SimpleDateFormat("HH:mm:SS", Locale.getDefault())
 
+    private val clipboardManager by lazy {
+        itemView.context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+    }
+
     fun bind(item: Tam.LogEvent) {
         val time = timeFormat.format(item.time.time)
 
@@ -115,7 +123,6 @@ class EventViewHolder(
         else "[$time] ${item.tag}:\n${item.message}"
 
         itemView.eventText.setTextColor(getColorByType(item.type))
-
         val spannableString = SpannableString(logString)
         val boldSpan = StyleSpan(Typeface.BOLD)
         spannableString.setSpan(boldSpan, 0, time.length + item.tag.length + 3, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
@@ -128,6 +135,14 @@ class EventViewHolder(
         itemView.setOnClickListener {
             item.isExpanded = !item.isExpanded
             clickListener.click(adapterPosition)
+        }
+
+        itemView.setOnLongClickListener {
+            val clipData: ClipData = ClipData.newPlainText(item.type.toString(), logString)
+            clipboardManager.primaryClip = clipData
+            Toast.makeText(itemView.context, "The message has been saved to the clipboard", Toast.LENGTH_SHORT)
+                .show()
+            true
         }
     }
 
