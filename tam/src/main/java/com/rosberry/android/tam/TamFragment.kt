@@ -26,21 +26,26 @@ import android.view.WindowManager
 import android.content.ClipboardManager
 import android.content.Context
 import android.widget.Toast
+import com.rosberry.android.tam.domain.clipboard.ClipboardInteractor
 import kotlinx.android.synthetic.main.f_tam.*
 import kotlinx.android.synthetic.main.i_log_event.view.*
+import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.viewModel
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 /**
  * @author Alexei Korshun on 01/11/2018.
  */
-class TamFragment : DialogFragment(), Tam.EventObserver {
+class TamFragment : DialogFragment(), Tam.EventObserver, ItemClickListener {
 
     companion object {
         const val TAG = "TamFragment"
     }
 
     private lateinit var adapter: EventsAdapter
+
+    val tamPresenter: TamPresenter by inject()
 
     private val handler: Handler = Handler(Looper.getMainLooper())
 
@@ -56,7 +61,7 @@ class TamFragment : DialogFragment(), Tam.EventObserver {
     }
 
     override fun onResume() {
-        val params: ViewGroup.LayoutParams? = dialog?.window?.attributes;
+        val params: ViewGroup.LayoutParams? = dialog?.window?.attributes
         params?.width = WindowManager.LayoutParams.MATCH_PARENT
         params?.height = WindowManager.LayoutParams.MATCH_PARENT
         dialog?.window?.attributes = params as android.view.WindowManager.LayoutParams
@@ -71,32 +76,39 @@ class TamFragment : DialogFragment(), Tam.EventObserver {
 
     override fun events(events: List<Tam.LogEvent>) {
         adapter = EventsAdapter(ArrayList(events))
+        adapter.clickListener = this
         eventsList.adapter = adapter
     }
 
     override fun newEvent(event: Tam.LogEvent) {
         handler.post { adapter.putEvent(event) }
     }
+
+    override fun click(position: Int) {
+        adapter.notifyItemChanged(position)
+    }
+
+    override fun longClick(logEvent: Tam.LogEvent) {
+        tamPresenter.saveToClipboard(logEvent.type.name, logEvent.message)
+    }
 }
 
 class EventsAdapter(
         private val items: MutableList<Tam.LogEvent>
-) : RecyclerView.Adapter<EventViewHolder>(), ItemClickListener {
+) : RecyclerView.Adapter<EventViewHolder>() {
+
+    lateinit var clickListener: ItemClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.i_log_event, parent, false)
-        return EventViewHolder(view, this)
+        return EventViewHolder(view, clickListener)
     }
 
     override fun getItemCount(): Int = items.size
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
         holder.bind(items[position])
-    }
-
-    override fun click(position: Int) {
-        notifyItemChanged(position)
     }
 
     fun putEvent(item: Tam.LogEvent) {
@@ -109,6 +121,7 @@ class EventViewHolder(
         view: View,
         private val clickListener: ItemClickListener
 ) : RecyclerView.ViewHolder(view) {
+
 
     private val timeFormat = SimpleDateFormat("HH:mm:SS", Locale.getDefault())
 
@@ -159,4 +172,6 @@ class EventViewHolder(
 interface ItemClickListener {
 
     fun click(position: Int)
+
+    fun longClick(logEvent: Tam.LogEvent)
 }
