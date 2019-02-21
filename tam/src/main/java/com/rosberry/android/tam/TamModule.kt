@@ -1,3 +1,9 @@
+/*
+ *
+ *  Copyright (c) 2019 Rosberry. All rights reserved.
+ *
+ */
+
 package com.rosberry.android.tam
 
 import com.rosberry.android.tam.domain.clipboard.ClipboardInteractor

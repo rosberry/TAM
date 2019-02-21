@@ -1,12 +1,11 @@
 /*
  *
- *  * Copyright (c) 2018 Rosberry. All rights reserved.
+ *  Copyright (c) 2019 Rosberry. All rights reserved.
  *
  */
 
 package com.rosberry.android.tam
 
-import android.content.ClipData
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
@@ -23,14 +22,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.content.ClipboardManager
-import android.content.Context
-import android.widget.Toast
-import com.rosberry.android.tam.domain.clipboard.ClipboardInteractor
 import kotlinx.android.synthetic.main.f_tam.*
 import kotlinx.android.synthetic.main.i_log_event.view.*
 import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.ext.viewModel
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -45,7 +39,7 @@ class TamFragment : DialogFragment(), Tam.EventObserver, ItemClickListener {
 
     private lateinit var adapter: EventsAdapter
 
-    val tamPresenter: TamPresenter by inject()
+    private val tamPresenter: TamPresenter by inject()
 
     private val handler: Handler = Handler(Looper.getMainLooper())
 
@@ -125,10 +119,6 @@ class EventViewHolder(
 
     private val timeFormat = SimpleDateFormat("HH:mm:SS", Locale.getDefault())
 
-    private val clipboardManager by lazy {
-        itemView.context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-    }
-
     fun bind(item: Tam.LogEvent) {
         val time = timeFormat.format(item.time.time)
 
@@ -151,10 +141,7 @@ class EventViewHolder(
         }
 
         itemView.setOnLongClickListener {
-            val clipData: ClipData = ClipData.newPlainText(item.type.toString(), logString)
-            clipboardManager.primaryClip = clipData
-            Toast.makeText(itemView.context, "The message has been saved to the clipboard", Toast.LENGTH_SHORT)
-                .show()
+            clickListener.longClick(item)
             true
         }
     }

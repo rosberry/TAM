@@ -1,3 +1,9 @@
+/*
+ *
+ *  Copyright (c) 2019 Rosberry. All rights reserved.
+ *
+ */
+
 package com.rosberry.android.tam
 
 import okhttp3.Interceptor

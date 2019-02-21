@@ -1,3 +1,9 @@
+/*
+ *
+ *  Copyright (c) 2019 Rosberry. All rights reserved.
+ *
+ */
+
 package com.rosberry.android.tam
 
 import android.app.Application
@@ -12,7 +18,6 @@ class TamApp: Application() {
     override fun onCreate() {
         super.onCreate()
 
-        // start Koin context
         startKoin {
             androidContext(this@TamApp)
             androidLogger()
