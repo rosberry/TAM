@@ -8,7 +8,6 @@ package com.rosberry.android.tam
 
 import java.io.PrintWriter
 import java.io.StringWriter
-import java.util.Calendar
 
 /**
  * @author Alexei Korshun on 01/11/2018.
@@ -68,12 +67,12 @@ class Tam private constructor() {
 
     private val events: MutableList<LogEvent> = mutableListOf()
 
-    fun observeEvents(observer: EventObserver) {
+    internal fun observeEvents(observer: EventObserver) {
         observers.add(observer)
         observer.events(ArrayList(events))
     }
 
-    fun deobserveEvents(observer: EventObserver) {
+    internal fun deobserveEvents(observer: EventObserver) {
         observers.remove(observer)
     }
 
@@ -82,26 +81,5 @@ class Tam private constructor() {
         for (observer in observers) {
             observer.newEvent(event)
         }
-    }
-
-    interface EventObserver {
-
-        fun events(events: List<LogEvent>)
-
-        fun newEvent(event: LogEvent)
-    }
-
-    data class LogEvent(
-            val type: LogType,
-            val tag: String = "",
-            val message: String = "",
-            var isExpanded: Boolean = false
-    ) {
-
-        val time: Calendar = Calendar.getInstance()
-    }
-
-    enum class LogType {
-        EVENT, ERROR, WARNING, HTTP
     }
 }
