@@ -6,25 +6,22 @@
 
 package com.rosberry.android.tam.domain.clipboard
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import android.widget.Toast
+import com.rosberry.android.tam.Tam
+import com.rosberry.android.tam.data.ClipboardRepository
+import com.rosberry.android.tam.utility.TimeFormatter
 
 /**
  * @author Evgeniy Nagibin on 19/02/2019.
  */
 
-class ClipboardInteractor(private val context: Context) {
+class ClipboardInteractor(
+        private val clipboardRepository: ClipboardRepository,
+        private val timeFormatter: TimeFormatter
+) {
 
-    private val clipboardManager by lazy {
-        context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-    }
-
-    fun saveToClipboard(label: CharSequence, message: CharSequence) {
-        val clipData: ClipData = ClipData.newPlainText(label, message)
-        clipboardManager.primaryClip = clipData
-        Toast.makeText(context, "The message has been saved to the clipboard", Toast.LENGTH_SHORT)
-            .show()
+    fun saveToClipboard(event: Tam.LogEvent) {
+        val formattedTime: String = timeFormatter.formatTimeAsMessage(event.time.time)
+        val message = "$formattedTime: ${event.type}: ${event.tag} ${event.message}"
+        clipboardRepository.saveToClipBoard(event.tag, message)
     }
 }

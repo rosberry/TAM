@@ -6,7 +6,12 @@
 
 package com.rosberry.android.tam
 
+import android.content.ClipboardManager
+import android.content.Context
+import com.rosberry.android.tam.data.ClipboardRepository
 import com.rosberry.android.tam.domain.clipboard.ClipboardInteractor
+import com.rosberry.android.tam.presentation.TamPresenter
+import com.rosberry.android.tam.utility.TimeFormatter
 import org.koin.dsl.module
 
 /**
@@ -14,7 +19,9 @@ import org.koin.dsl.module
  */
 val tamModule = module {
 
-    single { ClipboardInteractor(get()) }
-
+    factory { TimeFormatter() }
+    factory { get<Context>().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager }
+    factory { ClipboardRepository(get()) }
+    factory { ClipboardInteractor(get(), get()) }
     factory { TamPresenter(get()) }
 }

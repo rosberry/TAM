@@ -11,8 +11,8 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import com.rosberry.android.tam.Tam
-import com.rosberry.android.tam.TamFragment
 import com.rosberry.android.tam.TamLoggingInterceptor
+import com.rosberry.android.tam.ui.TamFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.Call
 import okhttp3.Callback
@@ -87,7 +87,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         if (item?.itemId == ITEM_ID) {
-            TamFragment().show(supportFragmentManager, TamFragment.TAG)
+            TamFragment()
+                .show(supportFragmentManager, TamFragment.TAG)
             return true
         }
         return super.onOptionsItemSelected(item)

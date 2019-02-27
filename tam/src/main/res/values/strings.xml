@@ -6,4 +6,5 @@
 
 <resources>
     <string name="app_name">TAM</string>
+    <string name="message_copied">Message has been copied to clipboard.</string>
 </resources>
