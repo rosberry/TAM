@@ -12,7 +12,7 @@ import android.content.ClipboardManager
 /**
  * @author Alexei Korshun on 27/02/2019.
  */
-class ClipboardRepository(
+internal class ClipboardRepository(
         private val clipboardManager: ClipboardManager
 ) {
 

@@ -13,7 +13,7 @@ import java.util.Locale
 /**
  * @author Alexei Korshun on 27/02/2019.
  */
-class TimeFormatter {
+internal class TimeFormatter {
 
     private val logsTimeFormat = SimpleDateFormat("HH:mm:SS", Locale.getDefault())
     private val copyTimeFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:SS", Locale.getDefault())

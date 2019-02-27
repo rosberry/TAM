@@ -16,7 +16,7 @@ import com.rosberry.android.tam.utility.TimeFormatter
 /**
  * @author Alexei Korshun on 27/02/2019.
  */
-class EventsAdapter(
+internal class EventsAdapter(
         private val items: MutableList<Tam.LogEvent>,
         private val clickListener: ItemClickListener,
         private val timeFormatter: TimeFormatter

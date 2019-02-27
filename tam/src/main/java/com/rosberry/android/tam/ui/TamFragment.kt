@@ -18,8 +18,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.rosberry.android.tam.R
 import com.rosberry.android.tam.Tam
+import com.rosberry.android.tam.di.tamModule
 import com.rosberry.android.tam.presentation.TamPresenter
-import com.rosberry.android.tam.tamModule
 import kotlinx.android.synthetic.main.f_tam.*
 import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject

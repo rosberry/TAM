@@ -1,10 +1,10 @@
 /*
  *
- *  Copyright (c) 2019 Rosberry. All rights reserved.
+ *  * Copyright (c) 2018 Rosberry. All rights reserved.
  *
  */
 
-package com.rosberry.android.tam
+package com.rosberry.android.tam.di
 
 import android.content.ClipboardManager
 import android.content.Context
@@ -17,7 +17,7 @@ import org.koin.dsl.module
 /**
  * @author Evgeniy Nagibin on 19/02/2019.
  */
-val tamModule = module {
+internal val tamModule = module {
 
     factory { TimeFormatter() }
     factory { get<Context>().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager }

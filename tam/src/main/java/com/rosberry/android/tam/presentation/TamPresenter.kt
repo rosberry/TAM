@@ -14,7 +14,7 @@ import com.rosberry.android.tam.ui.TamFragment
 /**
  * @author Evgeniy Nagibin on 19/02/2019.
  */
-class TamPresenter(
+internal class TamPresenter(
         private val interactor: ClipboardInteractor
 ) {
 

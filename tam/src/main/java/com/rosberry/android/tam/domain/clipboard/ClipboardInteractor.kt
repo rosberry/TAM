@@ -14,7 +14,7 @@ import com.rosberry.android.tam.utility.TimeFormatter
  * @author Evgeniy Nagibin on 19/02/2019.
  */
 
-class ClipboardInteractor(
+internal class ClipboardInteractor(
         private val clipboardRepository: ClipboardRepository,
         private val timeFormatter: TimeFormatter
 ) {

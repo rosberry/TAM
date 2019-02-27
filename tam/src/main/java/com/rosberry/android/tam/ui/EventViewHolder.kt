@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.i_log_event.view.*
 /**
  * @author Alexei Korshun on 27/02/2019.
  */
-class EventViewHolder(
+internal class EventViewHolder(
         view: View,
         private val clickListener: ItemClickListener,
         private val timeFormatter: TimeFormatter

@@ -11,7 +11,7 @@ import com.rosberry.android.tam.Tam
 /**
  * @author Alexei Korshun on 27/02/2019.
  */
-interface ItemClickListener {
+internal interface ItemClickListener {
 
     fun click(position: Int)
 
