@@ -31,12 +31,12 @@ class TamLoggingInterceptor : Interceptor {
 
         val authorizationHeader = request.header("Authorization")
 
-        val requestBody = request.body()?.let {
-            val buffer = Buffer().apply { it.writeTo(this) }
-            val charset = it.contentType()?.charset(
-                    UTF8) ?: UTF8
-            buffer.readString(charset)
-        }
+        val requestBody = request.body()
+            ?.let {
+                val buffer = Buffer().apply { it.writeTo(this) }
+                val charset = it.contentType()?.charset(UTF8) ?: UTF8
+                buffer.readString(charset)
+            }
 
         val requestParams: Map<String, String?> = mapOf(
                 "--->" to url,
@@ -52,7 +52,8 @@ class TamLoggingInterceptor : Interceptor {
             throw error
         }
 
-        val responseBody = response.body()?.string()
+        val responseBody = response.body()
+            ?.string()
 
         val responseParams: Map<String, String?> = mapOf(
                 "<---" to url,
