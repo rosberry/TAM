@@ -6,6 +6,7 @@
 
 package com.rosberry.android.tam.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -18,9 +19,14 @@ import android.widget.Toast
 import com.rosberry.android.tam.R
 import com.rosberry.android.tam.Tam
 import com.rosberry.android.tam.presentation.TamPresenter
+import com.rosberry.android.tam.tamModule
 import kotlinx.android.synthetic.main.f_tam.*
 import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
 
 /**
  * @author Alexei Korshun on 01/11/2018.
@@ -37,13 +43,23 @@ class TamFragment : DialogFragment(), Tam.EventObserver, ItemClickListener {
 
     private val handler: Handler = Handler(Looper.getMainLooper())
 
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        startKoin {
+            androidContext(this@TamFragment.requireContext().applicationContext)
+            androidLogger()
+            modules(tamModule)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_FRAME, R.style.DialogTheme)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return LayoutInflater.from(context).inflate(R.layout.f_tam, null)
+        return LayoutInflater.from(context)
+            .inflate(R.layout.f_tam, null)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -67,6 +83,11 @@ class TamFragment : DialogFragment(), Tam.EventObserver, ItemClickListener {
         Tam.instance()
             .deobserveEvents(this)
         super.onDestroyView()
+    }
+
+    override fun onDestroy() {
+        stopKoin()
+        super.onDestroy()
     }
 
     override fun events(events: List<Tam.LogEvent>) {
