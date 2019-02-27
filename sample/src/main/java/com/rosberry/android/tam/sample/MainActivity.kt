@@ -1,6 +1,6 @@
 /*
  *
- *  * Copyright (c) 2018 Rosberry. All rights reserved.
+ *  Copyright (c) 2019 Rosberry. All rights reserved.
  *
  */
 
@@ -11,8 +11,8 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import com.rosberry.android.tam.Tam
-import com.rosberry.android.tam.TamFragment
-import com.rosberry.android.tam.TamLoggingInterceptor
+import com.rosberry.android.tam.interceptor.TamLoggingInterceptor
+import com.rosberry.android.tam.ui.TamFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.Call
 import okhttp3.Callback
