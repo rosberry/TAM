@@ -14,7 +14,6 @@ import android.support.v7.widget.DefaultItemAnimator
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.Toast
 import com.rosberry.android.tam.R
 import com.rosberry.android.tam.Tam
@@ -38,8 +37,13 @@ class TamFragment : DialogFragment(), Tam.EventObserver, ItemClickListener {
 
     private val handler: Handler = Handler(Looper.getMainLooper())
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(STYLE_NO_FRAME, R.style.DialogTheme)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.f_tam, container, false)
+        return LayoutInflater.from(context).inflate(R.layout.f_tam, null)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -50,17 +54,13 @@ class TamFragment : DialogFragment(), Tam.EventObserver, ItemClickListener {
     }
 
     override fun onResume() {
-        presenter.view = this
-        val params: ViewGroup.LayoutParams? = dialog?.window?.attributes
-        params?.width = WindowManager.LayoutParams.MATCH_PARENT
-        params?.height = WindowManager.LayoutParams.MATCH_PARENT
-        dialog?.window?.attributes = params as android.view.WindowManager.LayoutParams
         super.onResume()
+        presenter.view = this
     }
 
     override fun onPause() {
-        super.onPause()
         presenter.view = null
+        super.onPause()
     }
 
     override fun onDestroyView() {
