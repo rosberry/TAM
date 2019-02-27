@@ -1,11 +1,12 @@
 /*
  *
- *  Copyright (c) 2019 Rosberry. All rights reserved.
+ *  * Copyright (c) 2018 Rosberry. All rights reserved.
  *
  */
 
-package com.rosberry.android.tam
+package com.rosberry.android.tam.interceptor
 
+import com.rosberry.android.tam.Tam
 import okhttp3.Interceptor
 import okhttp3.Response
 import okio.Buffer
@@ -32,7 +33,8 @@ class TamLoggingInterceptor : Interceptor {
 
         val requestBody = request.body()?.let {
             val buffer = Buffer().apply { it.writeTo(this) }
-            val charset = it.contentType()?.charset(UTF8) ?: UTF8
+            val charset = it.contentType()?.charset(
+                    UTF8) ?: UTF8
             buffer.readString(charset)
         }
 
