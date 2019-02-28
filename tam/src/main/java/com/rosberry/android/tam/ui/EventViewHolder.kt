@@ -7,15 +7,12 @@
 package com.rosberry.android.tam.ui
 
 import android.graphics.Color
-import android.graphics.Typeface
 import android.support.v7.widget.RecyclerView
-import android.text.Spannable
-import android.text.SpannableString
 import android.text.TextUtils
-import android.text.style.StyleSpan
 import android.view.View
-import com.rosberry.android.tam.Tam
-import com.rosberry.android.tam.utility.TimeFormatter
+import com.rosberry.android.tam.LogEvent
+import com.rosberry.android.tam.LogType
+import com.rosberry.android.tam.utility.MessageFormatter
 import kotlinx.android.synthetic.main.i_log_event.view.*
 
 /**
@@ -24,42 +21,34 @@ import kotlinx.android.synthetic.main.i_log_event.view.*
 internal class EventViewHolder(
         view: View,
         private val clickListener: ItemClickListener,
-        private val timeFormatter: TimeFormatter
+        private val messageFormatter: MessageFormatter
 ) : RecyclerView.ViewHolder(view) {
 
-    fun bind(item: Tam.LogEvent) {
-        val time = timeFormatter.formatTimeAsLog(item.time.time)
+    fun bind(item: LogEvent) {
 
-        val logString = if (item.type == Tam.LogType.HTTP) "[$time] ${item.tag}: ${item.message}"
-        else "[$time] ${item.tag}:\n${item.message}"
-
-        itemView.eventText.setTextColor(getColorByType(item.type))
-        val spannableString = SpannableString(logString)
-        val boldSpan = StyleSpan(Typeface.BOLD)
-        spannableString.setSpan(boldSpan, 0, time.length + item.tag.length + 3, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
-
+        val message = messageFormatter.format(item)
         val maxLines = if (item.isExpanded) Integer.MAX_VALUE else 3
+
+        itemView.eventText.setTextColor(item.type.getColorByType())
         itemView.eventText.maxLines = maxLines
         itemView.eventText.ellipsize = TextUtils.TruncateAt.END
-        itemView.eventText.text = spannableString
-
+        itemView.eventText.text = message
         itemView.setOnClickListener {
             item.isExpanded = !item.isExpanded
             clickListener.click(adapterPosition)
         }
-
         itemView.setOnLongClickListener {
             clickListener.longClick(item)
             true
         }
     }
+}
 
-    private fun getColorByType(type: Tam.LogType): Int {
-        return when (type) {
-            Tam.LogType.EVENT -> Color.parseColor("#00E676")
-            Tam.LogType.ERROR -> Color.parseColor("#D50000")
-            Tam.LogType.WARNING -> Color.parseColor("#FFF9C4")
-            Tam.LogType.HTTP -> Color.parseColor("#00E5FF")
-        }
+private fun LogType.getColorByType(): Int {
+    return when (this) {
+        LogType.EVENT -> Color.parseColor("#00E676")
+        LogType.ERROR -> Color.parseColor("#D50000")
+        LogType.WARNING -> Color.parseColor("#FFF9C4")
+        LogType.HTTP -> Color.parseColor("#00E5FF")
     }
 }

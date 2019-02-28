@@ -6,9 +6,9 @@
 
 package com.rosberry.android.tam.domain.clipboard
 
-import com.rosberry.android.tam.Tam
+import com.rosberry.android.tam.LogEvent
 import com.rosberry.android.tam.data.ClipboardRepository
-import com.rosberry.android.tam.utility.TimeFormatter
+import com.rosberry.android.tam.utility.MessageFormatter
 
 /**
  * @author Evgeniy Nagibin on 19/02/2019.
@@ -16,12 +16,11 @@ import com.rosberry.android.tam.utility.TimeFormatter
 
 internal class ClipboardInteractor(
         private val clipboardRepository: ClipboardRepository,
-        private val timeFormatter: TimeFormatter
+        private val messageFormatter: MessageFormatter
 ) {
 
-    fun saveToClipboard(event: Tam.LogEvent) {
-        val formattedTime: String = timeFormatter.formatTimeAsMessage(event.time.time)
-        val message = "$formattedTime: ${event.type}: ${event.tag} ${event.message}"
+    fun saveToClipboard(event: LogEvent) {
+        val message = messageFormatter.format(event)
         clipboardRepository.saveToClipBoard(event.tag, message)
     }
 }

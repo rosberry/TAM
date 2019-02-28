@@ -6,6 +6,8 @@
 
 package com.rosberry.android.tam.presentation
 
+import com.rosberry.android.tam.EventObserver
+import com.rosberry.android.tam.LogEvent
 import com.rosberry.android.tam.R
 import com.rosberry.android.tam.Tam
 import com.rosberry.android.tam.domain.clipboard.ClipboardInteractor
@@ -16,14 +18,32 @@ import com.rosberry.android.tam.ui.TamFragment
  */
 internal class TamPresenter(
         private val interactor: ClipboardInteractor
-) {
+) : EventObserver {
 
-    var view: TamFragment? = null
+    private var view: TamFragment? = null
 
-    fun saveToClipboard(event: Tam.LogEvent) {
+    override fun events(events: List<LogEvent>) {
+        view?.showEvents(events)
+    }
+
+    override fun newEvent(event: LogEvent) {
+        view?.addEvent(event)
+    }
+
+    fun saveToClipboard(event: LogEvent) {
         interactor.saveToClipboard(event)
         view?.run {
             this.showMessage(R.string.message_copied)
         }
+    }
+
+    fun onAttach(view: TamFragment) {
+        this.view = view
+        Tam.instance().observeEvents(this)
+    }
+
+    fun onDetach() {
+        view = null
+        Tam.instance().deobserveEvents(this)
     }
 }

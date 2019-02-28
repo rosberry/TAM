@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         if (item?.itemId == ITEM_ID) {
-            TamFragment().show(supportFragmentManager, TamFragment.TAG)
+            TamFragment.show(supportFragmentManager)
             return true
         }
         return super.onOptionsItemSelected(item)

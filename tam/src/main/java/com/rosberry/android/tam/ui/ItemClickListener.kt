@@ -6,7 +6,7 @@
 
 package com.rosberry.android.tam.ui
 
-import com.rosberry.android.tam.Tam
+import com.rosberry.android.tam.LogEvent
 
 /**
  * @author Alexei Korshun on 27/02/2019.
@@ -15,5 +15,5 @@ internal interface ItemClickListener {
 
     fun click(position: Int)
 
-    fun longClick(logEvent: Tam.LogEvent)
+    fun longClick(logEvent: LogEvent)
 }

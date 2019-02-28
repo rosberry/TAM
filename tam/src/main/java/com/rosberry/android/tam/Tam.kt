@@ -8,6 +8,7 @@ package com.rosberry.android.tam
 
 import java.io.PrintWriter
 import java.io.StringWriter
+import java.lang.ref.WeakReference
 
 /**
  * @author Alexei Korshun on 01/11/2018.
@@ -17,7 +18,7 @@ class Tam private constructor() {
     companion object {
 
         private var instance: Tam? = null
-        private val observers: MutableList<EventObserver> = mutableListOf()
+        private val weakObservers: MutableList<WeakReference<EventObserver>> = mutableListOf()
 
         fun init() {
             if (instance == null) instance = Tam()
@@ -68,18 +69,18 @@ class Tam private constructor() {
     private val events: MutableList<LogEvent> = mutableListOf()
 
     internal fun observeEvents(observer: EventObserver) {
-        observers.add(observer)
+        weakObservers.add(WeakReference(observer))
         observer.events(ArrayList(events))
     }
 
     internal fun deobserveEvents(observer: EventObserver) {
-        observers.remove(observer)
     }
 
     internal fun putEvent(event: LogEvent) {
         events.add(event)
-        for (observer in observers) {
-            observer.newEvent(event)
+        for (weak in weakObservers) {
+            weak.get()
+                ?.newEvent(event)
         }
     }
 }
