@@ -6,6 +6,11 @@
 
 package com.rosberry.android.tam
 
+import android.content.Context
+import com.rosberry.android.tam.di.tamModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
 import java.io.PrintWriter
 import java.io.StringWriter
 import java.lang.ref.WeakReference
@@ -20,12 +25,17 @@ class Tam private constructor() {
         private var instance: Tam? = null
         private val weakObservers: MutableList<WeakReference<EventObserver>> = mutableListOf()
 
-        fun init() {
-            if (instance == null) instance = Tam()
+        fun init(context: Context) {
+            startKoin {
+                androidContext(context.applicationContext)
+                androidLogger()
+                modules(tamModule)
+            }
+            instance = Tam()
         }
 
         fun instance(): Tam {
-            return instance!!
+            return checkNotNull(instance)
         }
 
         fun event(name: String, params: Map<String, Any>? = null) {

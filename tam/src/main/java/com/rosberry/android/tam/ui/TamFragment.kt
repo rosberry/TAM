@@ -7,7 +7,6 @@
 package com.rosberry.android.tam.ui
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -20,14 +19,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.rosberry.android.tam.LogEvent
 import com.rosberry.android.tam.R
-import com.rosberry.android.tam.di.tamModule
 import com.rosberry.android.tam.presentation.TamPresenter
 import kotlinx.android.synthetic.main.f_tam.*
 import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 
 /**
@@ -52,15 +47,6 @@ class TamFragment : DialogFragment() {
 
         override fun click(position: Int) {
             adapter.notifyItemChanged(position)
-        }
-    }
-
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        startKoin {
-            androidContext(this@TamFragment.requireContext().applicationContext)
-            androidLogger()
-            modules(tamModule)
         }
     }
 

@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        Tam.init() // Init library in Application class.
+        Tam.init(this) // Init library in Application class.
 
         logEventButton.setOnClickListener {
             Tam.event(EVENT_TAG, "event message")
