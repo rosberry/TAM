@@ -17,6 +17,7 @@ internal class MessageFormatter(
 ) {
 
     fun format(event: LogEvent): String {
+        //TODO need to choose right time format
         val time = timeFormatter.formatTimeAsLog(event.time.time)
 
         return if (event.type == LogType.HTTP) "[$time] ${event.tag}: ${event.message}"
