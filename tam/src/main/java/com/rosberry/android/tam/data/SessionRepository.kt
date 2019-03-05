@@ -8,13 +8,15 @@ package com.rosberry.android.tam.data
 
 import android.content.Context
 import com.rosberry.android.tam.LogEvent
+import com.rosberry.android.tam.utility.LogEventSerializer
 import java.io.File
 
 /**
  * @author Alexei Korshun on 05/03/2019.
  */
 internal class SessionRepository(
-        private val context: Context
+        private val context: Context,
+        private val logEventSerializer: LogEventSerializer
 ) {
 
     fun createSession(sessionName: String) {
@@ -29,7 +31,7 @@ internal class SessionRepository(
     }
 
     fun write(event: LogEvent, sessionName: String) {
-        val fileContents = event.toString()
+        val fileContents = logEventSerializer.serialize(event)
         context.openFileOutput(sessionName, Context.MODE_APPEND)
             .use {
                 it.write("\n$fileContents".toByteArray())
