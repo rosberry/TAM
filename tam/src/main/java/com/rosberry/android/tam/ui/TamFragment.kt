@@ -23,7 +23,6 @@ import com.rosberry.android.tam.presentation.TamPresenter
 import kotlinx.android.synthetic.main.f_tam.*
 import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
-import org.koin.core.context.stopKoin
 
 /**
  * @author Alexei Korshun on 01/11/2018.
@@ -74,11 +73,6 @@ class TamFragment : DialogFragment() {
     override fun onPause() {
         presenter.onDetach()
         super.onPause()
-    }
-
-    override fun onDestroy() {
-        stopKoin()
-        super.onDestroy()
     }
 
     internal fun showEvents(events: List<LogEvent>) {

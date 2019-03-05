@@ -6,46 +6,25 @@
 
 package com.rosberry.android.tam.domain.session
 
-import android.content.Context
-import android.util.Log
-import java.io.BufferedReader
-import java.io.InputStreamReader
+import com.rosberry.android.tam.LogEvent
+import com.rosberry.android.tam.data.SessionRepository
+import com.rosberry.android.tam.utility.FileNameFormatter
 import java.util.Calendar
 
 /**
  * @author Alexei Korshun on 05/03/2019.
  */
 internal class SessionInteractor(
-        private val context: Context
+        fileNameFormatter: FileNameFormatter,
+        private val sessionRepository: SessionRepository
 ) {
-
-    private val currentSessionName: String = Calendar.getInstance().timeInMillis.toString()
+    private val currentSessionName = fileNameFormatter.getFileName(Calendar.getInstance().time)
 
     fun startSession() {
-        var files: Array<String> = context.filesDir.list()
-        for (fileName in files) {
-            context.deleteFile(fileName)
-        }
+        sessionRepository.createSession(currentSessionName)
+    }
 
-        val fileContents = "Hello world!"
-        context.openFileOutput(currentSessionName, Context.MODE_PRIVATE).use {
-            it.write(fileContents.toByteArray())
-        }
-
-        files = context.filesDir.list()
-        Log.d("Files: ", files.joinToString { it })
-        for (fileName in files) {
-            val fileInputStream = context.openFileInput(fileName)
-            val bufferReader = BufferedReader(InputStreamReader(fileInputStream))
-
-            var result = ""
-            var line: String? = bufferReader.readLine()
-
-            while (line != null) {
-                result += line
-                line = bufferReader.readLine()
-            }
-            Log.d("File $fileName content: ", result)
-        }
+    fun putEvent(event: LogEvent) {
+        sessionRepository.write(event, currentSessionName)
     }
 }

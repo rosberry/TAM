@@ -20,24 +20,26 @@ import java.lang.ref.WeakReference
 /**
  * @author Alexei Korshun on 01/11/2018.
  */
-class Tam private constructor() {
+class Tam private constructor(
+        private val sessionInteractor: SessionInteractor
+) {
+
+    init {
+        sessionInteractor.startSession()
+    }
 
     companion object {
 
         private var instance: Tam? = null
         private val weakObservers: MutableList<WeakReference<EventObserver>> = mutableListOf()
 
-        private lateinit var sessionInteractor: SessionInteractor
-
         fun init(context: Context) {
-            startKoin {
+            val koinApp = startKoin {
                 androidContext(context.applicationContext)
                 androidLogger()
                 modules(tamModule)
-                sessionInteractor = koin.get()
             }
-            instance = Tam()
-            sessionInteractor.startSession()
+            instance = Tam(koinApp.koin.get())
         }
 
         fun stop() {
@@ -104,5 +106,6 @@ class Tam private constructor() {
             weak.get()
                 ?.newEvent(event)
         }
+        sessionInteractor.putEvent(event)
     }
 }
