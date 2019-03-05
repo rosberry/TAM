@@ -4,7 +4,7 @@
  *
  */
 
-package com.rosberry.android.tam.ui
+package com.rosberry.android.tam.ui.log
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater

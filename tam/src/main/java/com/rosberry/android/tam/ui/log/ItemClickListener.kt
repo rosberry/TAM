@@ -4,7 +4,7 @@
  *
  */
 
-package com.rosberry.android.tam.ui
+package com.rosberry.android.tam.ui.log
 
 import com.rosberry.android.tam.LogEvent
 

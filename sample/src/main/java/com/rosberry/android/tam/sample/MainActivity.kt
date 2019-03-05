@@ -12,7 +12,7 @@ import android.view.Menu
 import android.view.MenuItem
 import com.rosberry.android.tam.Tam
 import com.rosberry.android.tam.interceptor.TamLoggingInterceptor
-import com.rosberry.android.tam.ui.TamFragment
+import com.rosberry.android.tam.ui.log.TamFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.Call
 import okhttp3.Callback

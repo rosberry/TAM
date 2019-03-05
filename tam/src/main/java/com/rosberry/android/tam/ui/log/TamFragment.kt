@@ -4,7 +4,7 @@
  *
  */
 
-package com.rosberry.android.tam.ui
+package com.rosberry.android.tam.ui.log
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -34,8 +34,9 @@ class TamFragment : Fragment() {
 
         fun show(fragmentManager: FragmentManager) {
             fragmentManager.beginTransaction()
-                .replace(android.R.id.content, TamFragment(), TamFragment.TAG)
-                .addToBackStack(TamFragment.TAG)
+                .replace(android.R.id.content, TamFragment(),
+                        TAG)
+                .addToBackStack(TAG)
                 .commit()
         }
     }
