@@ -15,7 +15,7 @@ import java.util.Locale
  */
 internal class FileNameFormatter {
 
-    private val datePattern = "yyyyMMdd_HHmmSS"
+    private val datePattern = "yyyyMMdd_HHmmss"
     private val dateFormatter: SimpleDateFormat = SimpleDateFormat(datePattern, Locale.getDefault())
 
     fun getFileName(date: Date): String = dateFormatter.format(date)
