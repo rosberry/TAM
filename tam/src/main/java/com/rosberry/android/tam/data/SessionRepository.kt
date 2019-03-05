@@ -30,6 +30,10 @@ internal class SessionRepository(
         }
     }
 
+    fun removeSession(sessionName: String) {
+        context.deleteFile(sessionName)
+    }
+
     fun write(event: LogEvent, sessionName: String) {
         val fileContents = logEventSerializer.serialize(event)
         context.openFileOutput(sessionName, Context.MODE_APPEND)
@@ -37,4 +41,6 @@ internal class SessionRepository(
                 it.write("\n$fileContents".toByteArray())
             }
     }
+
+    fun listOfSessions(): Array<String> = context.filesDir.list()
 }

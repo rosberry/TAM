@@ -6,7 +6,6 @@
 
 package com.rosberry.android.tam.ui.log
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -20,6 +19,7 @@ import android.widget.Toast
 import com.rosberry.android.tam.LogEvent
 import com.rosberry.android.tam.R
 import com.rosberry.android.tam.presentation.TamPresenter
+import com.rosberry.android.tam.ui.session.SessionsFragment
 import kotlinx.android.synthetic.main.f_tam.*
 import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
@@ -55,15 +55,22 @@ class TamFragment : Fragment() {
         }
     }
 
-    @SuppressLint("InflateParams")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return LayoutInflater.from(context)
-            .inflate(R.layout.f_tam, null)
+            .inflate(R.layout.f_tam, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         eventsList.itemAnimator = DefaultItemAnimator()
+        sessionsButton.setOnClickListener {
+            fragmentManager?.run {
+                this.beginTransaction()
+                    .replace(android.R.id.content, SessionsFragment(), "Session")
+                    .addToBackStack(null)
+                    .commit()
+            }
+        }
     }
 
     override fun onResume() {

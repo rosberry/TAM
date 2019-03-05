@@ -24,10 +24,6 @@ class Tam private constructor(
         private val sessionInteractor: SessionInteractor
 ) {
 
-    init {
-        sessionInteractor.startSession()
-    }
-
     companion object {
 
         private var instance: Tam? = null

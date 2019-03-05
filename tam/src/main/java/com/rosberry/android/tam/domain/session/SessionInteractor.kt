@@ -18,13 +18,18 @@ internal class SessionInteractor(
         fileNameFormatter: FileNameFormatter,
         private val sessionRepository: SessionRepository
 ) {
+
     private val currentSessionName = fileNameFormatter.getFileName(Calendar.getInstance().time)
 
-    fun startSession() {
+    init {
         sessionRepository.createSession(currentSessionName)
     }
 
-    fun putEvent(event: LogEvent) {
-        sessionRepository.write(event, currentSessionName)
-    }
+    fun putEvent(event: LogEvent): Unit = sessionRepository.write(event, currentSessionName)
+
+    fun getSessions(): Array<String> = sessionRepository.listOfSessions()
+
+    fun removeSessions(): Unit = sessionRepository.removeSessions()
+
+    fun removeSession(sessionName: String): Unit = sessionRepository.removeSession(sessionName)
 }
