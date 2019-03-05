@@ -18,11 +18,11 @@ internal class TimeFormatter {
     private val logsTimeFormat = SimpleDateFormat("HH:mm:SS", Locale.getDefault())
     private val copyTimeFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:SS", Locale.getDefault())
 
-    fun formatTimeAsLog(date: Date): String {
+    fun shortDateFormat(date: Date): String {
         return logsTimeFormat.format(date)
     }
 
-    fun formatTimeAsMessage(date: Date): String {
+    fun fullDateFormat(date: Date): String {
         return copyTimeFormat.format(date)
     }
 }

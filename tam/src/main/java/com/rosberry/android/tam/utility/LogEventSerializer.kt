@@ -16,7 +16,7 @@ internal class LogEventSerializer(
 ) {
 
     fun serialize(event: LogEvent): String {
-        val eventTime = timeFormatter.formatTimeAsMessage(event.time.time)
+        val eventTime = timeFormatter.fullDateFormat(event.time.time)
 
         return "[ ${event.type} $eventTime ${event.tag} ${event.message} ]"
     }

@@ -20,7 +20,7 @@ internal class ClipboardInteractor(
 ) {
 
     fun saveToClipboard(event: LogEvent) {
-        val message = messageFormatter.format(event)
+        val message = messageFormatter.fullTimeFormatMessage(event)
         clipboardRepository.saveToClipBoard(event.tag, message)
     }
 }

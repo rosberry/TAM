@@ -26,7 +26,7 @@ internal class EventViewHolder(
 
     fun bind(item: LogEvent) {
 
-        val message = messageFormatter.format(item)
+        val message = messageFormatter.shortTimeFormatMessage(item)
         val maxLines = if (item.isExpanded) Integer.MAX_VALUE else 3
 
         itemView.eventText.setTextColor(item.type.getColorByType())
