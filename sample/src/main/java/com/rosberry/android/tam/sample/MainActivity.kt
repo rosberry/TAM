@@ -78,6 +78,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onDestroy() {
+        Tam.stop()
+        super.onDestroy()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menu?.run {
             this.add(0, ITEM_ID, 0, "Tam Log")

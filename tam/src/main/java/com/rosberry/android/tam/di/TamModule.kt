@@ -10,6 +10,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import com.rosberry.android.tam.data.ClipboardRepository
 import com.rosberry.android.tam.domain.clipboard.ClipboardInteractor
+import com.rosberry.android.tam.domain.session.SessionInteractor
 import com.rosberry.android.tam.presentation.TamPresenter
 import com.rosberry.android.tam.utility.MessageFormatter
 import com.rosberry.android.tam.utility.TimeFormatter
@@ -26,4 +27,6 @@ internal val tamModule = module {
     factory { ClipboardRepository(get()) }
     factory { ClipboardInteractor(get(), get()) }
     factory { TamPresenter(get()) }
+
+    single { SessionInteractor(get()) }
 }

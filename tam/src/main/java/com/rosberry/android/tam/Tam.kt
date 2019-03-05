@@ -8,9 +8,11 @@ package com.rosberry.android.tam
 
 import android.content.Context
 import com.rosberry.android.tam.di.tamModule
+import com.rosberry.android.tam.domain.session.SessionInteractor
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
 import java.io.PrintWriter
 import java.io.StringWriter
 import java.lang.ref.WeakReference
@@ -25,13 +27,23 @@ class Tam private constructor() {
         private var instance: Tam? = null
         private val weakObservers: MutableList<WeakReference<EventObserver>> = mutableListOf()
 
+        private lateinit var sessionInteractor: SessionInteractor
+
         fun init(context: Context) {
             startKoin {
                 androidContext(context.applicationContext)
                 androidLogger()
                 modules(tamModule)
+                sessionInteractor = koin.get()
             }
             instance = Tam()
+            sessionInteractor.startSession()
+        }
+
+        fun stop() {
+            stopKoin()
+            instance = null
+            weakObservers.clear()
         }
 
         fun instance(): Tam {
