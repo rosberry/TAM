@@ -15,8 +15,6 @@ internal data class LogEvent(
         val type: LogType,
         val tag: String = "",
         val message: String = "",
-        var isExpanded: Boolean = false
-) {
-
-    val time: Calendar = Calendar.getInstance()
-}
+        var isExpanded: Boolean = false,
+        val time: Calendar = Calendar.getInstance()
+)
