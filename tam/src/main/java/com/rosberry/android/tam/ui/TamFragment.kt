@@ -10,7 +10,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.support.v4.app.DialogFragment
+import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v7.widget.DefaultItemAnimator
 import android.view.LayoutInflater
@@ -27,12 +27,17 @@ import org.koin.android.ext.android.inject
 /**
  * @author Alexei Korshun on 01/11/2018.
  */
-class TamFragment : DialogFragment() {
+class TamFragment : Fragment() {
 
     companion object {
         private const val TAG = "TamFragment"
 
-        fun show(fragmentManager: FragmentManager) = TamFragment().show(fragmentManager, TamFragment.TAG)
+        fun show(fragmentManager: FragmentManager) {
+            fragmentManager.beginTransaction()
+                .replace(android.R.id.content, TamFragment(), TamFragment.TAG)
+                .addToBackStack(TamFragment.TAG)
+                .commit()
+        }
     }
 
     private lateinit var adapter: EventsAdapter
@@ -47,11 +52,6 @@ class TamFragment : DialogFragment() {
         override fun click(position: Int) {
             adapter.notifyItemChanged(position)
         }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setStyle(STYLE_NO_FRAME, R.style.DialogTheme)
     }
 
     @SuppressLint("InflateParams")
