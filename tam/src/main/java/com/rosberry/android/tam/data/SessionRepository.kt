@@ -19,10 +19,11 @@ internal class SessionRepository(private val context: Context) {
     private val dirName = "tam_sessions"
 
     private val tamDir: File
-        get() = File(context.filesDir, dirName)
+        get() = File(context.filesDir, dirName).apply { mkdir() }
 
     fun createSession(sessionName: String) {
-        File(tamDir, sessionName)
+        File(tamDir, "$sessionName.txt")
+            .createNewFile()
     }
 
     fun removeSessions() {
@@ -36,9 +37,12 @@ internal class SessionRepository(private val context: Context) {
 
     fun write(event: LogEvent, sessionName: String) {
         val fileContents = event.serialize()
-        context.openFileOutput(sessionName, Context.MODE_APPEND)
-            .use { fos -> fos.write("\n$fileContents".toByteArray()) }
+        File(tamDir, "$sessionName.txt")
+            .appendBytes("\n$fileContents".toByteArray())
     }
 
-    fun listOfSessions(): Array<String> = context.filesDir.list() ?: arrayOf()
+    fun listOfSessions(): Array<String> = tamDir.list() ?: arrayOf()
+
+    fun getFileBy(name: String): File? = tamDir.listFiles { file -> file.name == name }
+        ?.firstOrNull()
 }

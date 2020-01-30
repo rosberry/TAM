@@ -14,14 +14,23 @@ import androidx.recyclerview.widget.RecyclerView
 /**
  * @author Alexei Korshun on 05/03/2019.
  */
-internal class SessionViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+internal class SessionViewHolder(
+        view: View,
+        clickListener: (String) -> Unit
+) : RecyclerView.ViewHolder(view) {
+
+    private lateinit var name: String
+
+    init {
+        itemView.setOnClickListener { clickListener(name) }
+    }
 
     fun bind(sessionName: String) {
+        name = sessionName
         itemView.findViewById<TextView>(android.R.id.text1)
             ?.run {
                 text = sessionName
                 setTextColor(ContextCompat.getColor(itemView.context, android.R.color.white))
             }
     }
-
 }

@@ -26,5 +26,5 @@ internal val tamModule = module {
     factory { TamPresenter(get()) }
 
     factory { SessionRepository(get()) }
-    factory { SessionInteractor(get()) }
+    single { SessionInteractor(get()) }
 }

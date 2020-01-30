@@ -14,13 +14,15 @@ import androidx.recyclerview.widget.RecyclerView
  * @author Alexei Korshun on 05/03/2019.
  */
 internal class SessionAdapter(
-        private val items: Array<String>
+        private val items: Array<String>,
+        private val itemClickListener: (String) -> Unit
 ) : RecyclerView.Adapter<SessionViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, itemType: Int): SessionViewHolder {
         return SessionViewHolder(
                 LayoutInflater.from(parent.context)
-                    .inflate(android.R.layout.simple_list_item_1, parent, false)
+                    .inflate(android.R.layout.simple_list_item_1, parent, false),
+                itemClickListener
         )
     }
 

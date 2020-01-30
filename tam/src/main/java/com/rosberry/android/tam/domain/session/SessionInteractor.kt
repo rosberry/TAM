@@ -9,6 +9,7 @@ package com.rosberry.android.tam.domain.session
 import com.rosberry.android.tam.LogEvent
 import com.rosberry.android.tam.data.SessionRepository
 import com.rosberry.android.tam.utility.toFileName
+import java.io.File
 import java.util.Calendar
 
 /**
@@ -27,6 +28,9 @@ internal class SessionInteractor(
     fun putEvent(event: LogEvent): Unit = sessionRepository.write(event, currentSessionName)
 
     fun getSessions(): Array<String> = sessionRepository.listOfSessions()
+        .apply { sortDescending() }
+
+    fun getFileBy(name: String): File? = sessionRepository.getFileBy(name)
 
     fun removeSessions(): Unit = sessionRepository.removeSessions()
 
