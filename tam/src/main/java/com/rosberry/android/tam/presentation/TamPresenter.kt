@@ -44,6 +44,6 @@ internal class TamPresenter(
 
     fun onDetach() {
         view = null
-        Tam.instance().deobserveEvents(this)
+        Tam.instance().removeListener(this)
     }
 }

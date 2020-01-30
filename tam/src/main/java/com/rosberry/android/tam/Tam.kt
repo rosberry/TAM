@@ -93,7 +93,13 @@ class Tam private constructor(
         observer.events(ArrayList(events))
     }
 
-    internal fun deobserveEvents(observer: EventObserver) {
+    internal fun removeListener(observer: EventObserver) {
+        for (reference in weakObservers) {
+            if (reference.get() == observer) {
+                weakObservers.remove(reference)
+                break
+            }
+        }
     }
 
     internal fun putEvent(event: LogEvent) {
