@@ -21,7 +21,6 @@ import com.rosberry.android.tam.R
 import com.rosberry.android.tam.presentation.TamPresenter
 import com.rosberry.android.tam.ui.session.SessionsFragment
 import kotlinx.android.synthetic.main.f_tam.*
-import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
 
 /**
@@ -84,7 +83,7 @@ class TamFragment : Fragment() {
     }
 
     internal fun showEvents(events: List<LogEvent>) {
-        adapter = EventsAdapter(ArrayList(events), itemClickListener, get())
+        adapter = EventsAdapter(ArrayList(events), itemClickListener)
         eventsList.adapter = adapter
     }
 

@@ -12,7 +12,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.rosberry.android.tam.LogEvent
 import com.rosberry.android.tam.LogType
-import com.rosberry.android.tam.utility.MessageFormatter
+import com.rosberry.android.tam.utility.shortTimeFormatMessage
 import kotlinx.android.synthetic.main.i_log_event.view.*
 
 /**
@@ -20,19 +20,14 @@ import kotlinx.android.synthetic.main.i_log_event.view.*
  */
 internal class EventViewHolder(
         view: View,
-        private val clickListener: ItemClickListener,
-        private val messageFormatter: MessageFormatter
+        private val clickListener: ItemClickListener
 ) : RecyclerView.ViewHolder(view) {
 
-    fun bind(item: LogEvent) {
+    private val maxCollapsedLines = 3
 
-        val message = messageFormatter.shortTimeFormatMessage(item)
-        val maxLines = if (item.isExpanded) Integer.MAX_VALUE else 3
+    private lateinit var item: LogEvent
 
-        itemView.eventText.setTextColor(item.type.getColorByType())
-        itemView.eventText.maxLines = maxLines
-        itemView.eventText.ellipsize = TextUtils.TruncateAt.END
-        itemView.eventText.text = message
+    init {
         itemView.setOnClickListener {
             item.isExpanded = !item.isExpanded
             clickListener.click(adapterPosition)
@@ -42,10 +37,19 @@ internal class EventViewHolder(
             true
         }
     }
-}
 
-private fun LogType.getColorByType(): Int {
-    return when (this) {
+    fun bind(item: LogEvent) {
+        this.item = item
+        val message = item.shortTimeFormatMessage()
+        val maxLines = if (item.isExpanded) Integer.MAX_VALUE else maxCollapsedLines
+
+        itemView.eventText.setTextColor(item.type.getColorByType())
+        itemView.eventText.maxLines = maxLines
+        itemView.eventText.ellipsize = TextUtils.TruncateAt.END
+        itemView.eventText.text = message
+    }
+
+    private fun LogType.getColorByType(): Int = when (this) {
         LogType.EVENT -> Color.parseColor("#00E676")
         LogType.ERROR -> Color.parseColor("#D50000")
         LogType.WARNING -> Color.parseColor("#FFF9C4")

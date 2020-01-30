@@ -13,7 +13,6 @@ import com.rosberry.android.tam.data.SessionRepository
 import com.rosberry.android.tam.domain.clipboard.ClipboardInteractor
 import com.rosberry.android.tam.domain.session.SessionInteractor
 import com.rosberry.android.tam.presentation.TamPresenter
-import com.rosberry.android.tam.utility.MessageFormatter
 import org.koin.dsl.module
 
 /**
@@ -21,10 +20,9 @@ import org.koin.dsl.module
  */
 internal val tamModule = module {
 
-    factory { MessageFormatter() }
     factory { get<Context>().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager }
     factory { ClipboardRepository(get()) }
-    factory { ClipboardInteractor(get(), get()) }
+    factory { ClipboardInteractor(get()) }
     factory { TamPresenter(get()) }
 
     factory { SessionRepository(get()) }
