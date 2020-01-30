@@ -10,13 +10,13 @@
     android:layout_height="match_parent"
     android:background="#a000">
 
-    <android.support.v7.widget.RecyclerView android:id="@+id/eventsList"
+    <androidx.recyclerview.widget.RecyclerView android:id="@+id/eventsList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-    <android.support.design.widget.FloatingActionButton android:id="@+id/sessionsButton"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton android:id="@+id/sessionsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"

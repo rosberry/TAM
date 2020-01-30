@@ -6,9 +6,9 @@
 
 package com.rosberry.android.tam.ui.log
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.rosberry.android.tam.LogEvent
 import com.rosberry.android.tam.R
 import com.rosberry.android.tam.utility.MessageFormatter

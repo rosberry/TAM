@@ -13,20 +13,14 @@ import java.util.Date
 /**
  * @author Alexei Korshun on 27/02/2019.
  */
-internal class MessageFormatter(
-        private val timeFormatter: TimeFormatter
-) {
+internal class MessageFormatter {
 
     fun shortTimeFormatMessage(event: LogEvent): String {
-        return formatMessage(event) { date: Date ->
-            timeFormatter.shortDateFormat(date)
-        }
+        return formatMessage(event) { date: Date -> date.shortDateFormat() }
     }
 
     fun fullTimeFormatMessage(event: LogEvent): String {
-        return formatMessage(event) { date: Date ->
-            timeFormatter.fullDateFormat(date)
-        }
+        return formatMessage(event) { date: Date -> date.fullDateFormat() }
     }
 
     private inline fun formatMessage(event: LogEvent, dateFormatter: (Date) -> String): String {

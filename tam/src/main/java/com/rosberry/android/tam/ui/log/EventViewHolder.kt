@@ -7,9 +7,9 @@
 package com.rosberry.android.tam.ui.log
 
 import android.graphics.Color
-import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 import com.rosberry.android.tam.LogEvent
 import com.rosberry.android.tam.LogType
 import com.rosberry.android.tam.utility.MessageFormatter

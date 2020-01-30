@@ -8,26 +8,26 @@ package com.rosberry.android.tam.data
 
 import android.content.Context
 import com.rosberry.android.tam.LogEvent
-import com.rosberry.android.tam.utility.LogEventSerializer
+import com.rosberry.android.tam.utility.serialize
 import java.io.File
 
 /**
  * @author Alexei Korshun on 05/03/2019.
  */
-internal class SessionRepository(
-        private val context: Context,
-        private val logEventSerializer: LogEventSerializer
-) {
+internal class SessionRepository(private val context: Context) {
+
+    private val dirName = "tam_sessions"
+
+    private val tamDir: File
+        get() = File(context.filesDir, dirName)
 
     fun createSession(sessionName: String) {
-        File(context.filesDir, sessionName)
+        File(tamDir, sessionName)
     }
 
     fun removeSessions() {
-        val files: Array<String> = context.filesDir.list()
-        for (fileName in files) {
-            context.deleteFile(fileName)
-        }
+        listOfSessions().asSequence()
+            .forEach { fileName -> context.deleteFile(fileName) }
     }
 
     fun removeSession(sessionName: String) {
@@ -35,12 +35,10 @@ internal class SessionRepository(
     }
 
     fun write(event: LogEvent, sessionName: String) {
-        val fileContents = logEventSerializer.serialize(event)
+        val fileContents = event.serialize()
         context.openFileOutput(sessionName, Context.MODE_APPEND)
-            .use {
-                it.write("\n$fileContents".toByteArray())
-            }
+            .use { fos -> fos.write("\n$fileContents".toByteArray()) }
     }
 
-    fun listOfSessions(): Array<String> = context.filesDir.list()
+    fun listOfSessions(): Array<String> = context.filesDir.list() ?: arrayOf()
 }

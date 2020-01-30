@@ -7,9 +7,9 @@
 package com.rosberry.android.tam.sample
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import com.rosberry.android.tam.Tam
 import com.rosberry.android.tam.interceptor.TamLoggingInterceptor
 import com.rosberry.android.tam.ui.log.TamFragment

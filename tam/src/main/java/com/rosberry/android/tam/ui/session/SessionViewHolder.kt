@@ -6,10 +6,10 @@
 
 package com.rosberry.android.tam.ui.session
 
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 
 /**
  * @author Alexei Korshun on 05/03/2019.

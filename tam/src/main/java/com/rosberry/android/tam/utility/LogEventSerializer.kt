@@ -11,13 +11,8 @@ import com.rosberry.android.tam.LogEvent
 /**
  * @author Alexei Korshun on 05/03/2019.
  */
-internal class LogEventSerializer(
-        private val timeFormatter: TimeFormatter
-) {
+internal fun LogEvent.serialize(): String {
+    val eventTime = this.time.time.fullDateFormat()
 
-    fun serialize(event: LogEvent): String {
-        val eventTime = timeFormatter.fullDateFormat(event.time.time)
-
-        return "[ ${event.type} $eventTime ${event.tag} ${event.message} ]"
-    }
+    return "[ ${this.type} $eventTime ${this.tag} ${this.message} ]"
 }

@@ -7,10 +7,10 @@
 package com.rosberry.android.tam.ui.session
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.rosberry.android.tam.R
 import com.rosberry.android.tam.domain.session.SessionInteractor
 import kotlinx.android.synthetic.main.f_sessions.*
