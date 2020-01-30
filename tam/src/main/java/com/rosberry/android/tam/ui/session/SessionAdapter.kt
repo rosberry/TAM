@@ -18,7 +18,10 @@ internal class SessionAdapter(
 ) : RecyclerView.Adapter<SessionViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, itemType: Int): SessionViewHolder {
-        return SessionViewHolder(LayoutInflater.from(parent.context).inflate(android.R.layout.simple_list_item_1, parent, false))
+        return SessionViewHolder(
+                LayoutInflater.from(parent.context)
+                    .inflate(android.R.layout.simple_list_item_1, parent, false)
+        )
     }
 
     override fun getItemCount(): Int = items.size

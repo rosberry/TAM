@@ -19,13 +19,13 @@ import com.rosberry.android.tam.utility.MessageFormatter
 internal class EventsAdapter(
         private val items: MutableList<LogEvent>,
         private val clickListener: ItemClickListener,
-        private val messageFormetter: MessageFormatter
+        private val messageFormatter: MessageFormatter
 ) : RecyclerView.Adapter<EventViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.i_log_event, parent, false)
-        return EventViewHolder(view, clickListener, messageFormetter)
+        return EventViewHolder(view, clickListener, messageFormatter)
     }
 
     override fun getItemCount(): Int = items.size
