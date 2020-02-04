@@ -4,28 +4,26 @@
  *
  */
 
-package com.rosberry.android.tam.ui
+package com.rosberry.android.tam.ui.log
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.rosberry.android.tam.LogEvent
 import com.rosberry.android.tam.R
-import com.rosberry.android.tam.utility.MessageFormatter
 
 /**
  * @author Alexei Korshun on 27/02/2019.
  */
 internal class EventsAdapter(
         private val items: MutableList<LogEvent>,
-        private val clickListener: ItemClickListener,
-        private val messageFormetter: MessageFormatter
+        private val clickListener: ItemClickListener
 ) : RecyclerView.Adapter<EventViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.i_log_event, parent, false)
-        return EventViewHolder(view, clickListener, messageFormetter)
+        return EventViewHolder(view, clickListener)
     }
 
     override fun getItemCount(): Int = items.size

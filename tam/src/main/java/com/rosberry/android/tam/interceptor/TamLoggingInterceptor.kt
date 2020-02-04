@@ -24,14 +24,14 @@ class TamLoggingInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
 
-        val url: String = request.url()
-            .encodedPath()
+        val url: String = request.url
+            .encodedPath
 
-        val requestMethod = request.method()
+        val requestMethod = request.method
 
         val authorizationHeader = request.header("Authorization")
 
-        val requestBody = request.body()
+        val requestBody = request.body
             ?.let {
                 val buffer = Buffer().apply { it.writeTo(this) }
                 val charset = it.contentType()?.charset(UTF8) ?: UTF8
@@ -52,7 +52,7 @@ class TamLoggingInterceptor : Interceptor {
             throw error
         }
 
-        val responseBody = response.body()
+        val responseBody = response.body
             ?.string()
 
         val responseParams: Map<String, String?> = mapOf(

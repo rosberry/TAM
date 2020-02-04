@@ -18,6 +18,6 @@ internal class ClipboardRepository(
 
     fun saveToClipBoard(label: String, message: String) {
         val clipData: ClipData = ClipData.newPlainText(label, message)
-        clipboardManager.primaryClip = clipData
+        clipboardManager.setPrimaryClip(clipData)
     }
 }

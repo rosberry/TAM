@@ -7,12 +7,12 @@
 package com.rosberry.android.tam.sample
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import com.rosberry.android.tam.Tam
 import com.rosberry.android.tam.interceptor.TamLoggingInterceptor
-import com.rosberry.android.tam.ui.TamFragment
+import com.rosberry.android.tam.ui.log.TamFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.Call
 import okhttp3.Callback
@@ -76,6 +76,11 @@ class MainActivity : AppCompatActivity() {
             httpClient.newCall(request)
                 .enqueue(requestCallback)
         }
+    }
+
+    override fun onDestroy() {
+        Tam.stop()
+        super.onDestroy()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
