@@ -110,4 +110,5 @@ nexusStaging {
     stagingProfileId = '78f9782418af97'
     username = getRepositoryUsername()
     password = getRepositoryPassword()
+    delayBetweenRetriesInMillis = 5 * 60 * 1000
 }
